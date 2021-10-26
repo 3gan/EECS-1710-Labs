@@ -1,0 +1,95 @@
+float rotSeconds = 0;
+float rotMinutes = 0;
+float rotHours = 0;
+int lastSecond = 0;
+int lastMinute = 0;
+int lastHour = 0;
+
+float faceSize = 500;
+float lengthSecondHand = 220;
+float lengthMinuteHand = 200;
+float lengthHourHand = 100;
+
+color black = (0);
+
+void setup() {
+  size(2000, 1000, P2D); 
+  strokeWeight(2);
+}
+
+void draw() {
+  int s = second();
+  int m = minute();
+  int h = hour();
+  
+  background(0);
+  
+  if (s != lastSecond) {
+    rotSeconds = ((float) s / 60) * TWO_PI;
+    lastSecond = s;
+  }
+  
+  if (m != lastMinute) {
+    rotMinutes = ((float) m / 60) * TWO_PI; 
+    lastMinute = m;
+  }
+  
+  if (h != lastHour) {
+    rotHours = ((float) h / 12) * TWO_PI;  
+    println(h);
+    lastHour = h;
+  }
+  
+  fill(195);
+  stroke(200);
+  ellipse(width/2, height/2, faceSize, faceSize);
+  fill(0);
+  ellipse(width/2, height/2, 450, 450);
+  
+  stroke(black, 80);
+  for(int i=0; i<12; i++) {
+    float rot = ((float) i/12) * TWO_PI;
+    pushMatrix();
+    translate(width/2, height/2);
+    rotate(rot);
+    line(0, faceSize/3, 0, faceSize/2);
+    popMatrix();
+  }
+  
+  pushMatrix();
+  translate(width/2, height/2);
+  rotate(rotSeconds);
+  fill(200, 0, 0);
+  stroke(200, 0, 0);
+  line(0, 0, 0, -lengthSecondHand);
+  popMatrix();
+  
+  pushMatrix();
+  translate(width/2, height/2);
+  rotate(rotMinutes);
+  fill(255);
+  stroke(255);
+  line(0, 0, 0, -lengthMinuteHand);
+  popMatrix();
+  
+  pushMatrix();
+  translate(width/2, height/2);
+  rotate(rotHours);
+  line(0, 0, 0, -lengthHourHand);
+  popMatrix();
+  
+  fill(255);
+  ellipse(width/2, height/2, 10, 10);
+  
+  textSize(30);
+  fill(255);
+  text(floor(lastSecond), 1000, 900);
+  text(floor(lastMinute), 940, 900);
+  text(floor(lastHour), 880, 900);
+  
+  fill(255);
+  ellipse(930, 885, 4, 4);
+  ellipse(930, 895, 4, 4); 
+  ellipse(995, 885, 4, 4);
+  ellipse(995, 895, 4, 4); 
+}
